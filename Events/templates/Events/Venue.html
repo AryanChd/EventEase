@@ -1,0 +1,104 @@
+{% extends 'Events/Base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-0 rounded-3">
+                <div class="card-header" style="background-color: var(--primary-color); color: white;">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2 class="mb-0">
+                            <i class="fas fa-building me-2"></i>Venues
+                        </h2>
+                        <div class="dropdown">
+                            <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                {% if user.is_authenticated %}
+                                <li><a class="dropdown-item" href="{% url 'add-venue' %}">Add New Venue</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                {% endif %}
+                                <li><a class="dropdown-item" href="{% url 'search-venues' %}">Search Venues</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="list-group list-group-flush">
+                        {% for venue in venues %}
+                            <div class="list-group-item border-0 mb-2">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <a href="{% url 'show-venue' venue.id %}" class="text-decoration-none">
+                                            <h5 class="mb-1" style="color: var(--primary-color);">
+                                                <i class="fas fa-building me-2" style="color: var(--accent-color);"></i>
+                                                {{ venue }}
+                                            </h5>
+                                        </a>
+                                    </div>
+                                    {% if user.is_authenticated %}
+                                        <div>
+                                            <a href="{% url 'update-venue' venue.id %}" class="btn btn-sm me-2" style="background-color: var(--accent-color); color: white; border: none;">
+                                                <i class="fas fa-edit me-1"></i>Update
+                                            </a>
+                                            <a href="{% url 'delete-venue' venue.id %}" class="btn btn-sm" style="background-color: #E74C3C; color: white; border: none;">
+                                                <i class="fas fa-trash-alt me-1"></i>Delete
+                                            </a>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% empty %}
+                            <div class="text-center py-5">
+                                <i class="fas fa-building fa-3x mb-3" style="color: var(--warm-gray);"></i>
+                                <h3 style="color: var(--primary-color);">No Venues Found</h3>
+                                <p style="color: var(--warm-gray);">There are no venues available at the moment.</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Pagination -->
+                    <nav aria-label="Page navigation" class="mt-4">
+                        <ul class="pagination justify-content-center">
+                            {% if venues.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=1" aria-label="First" style="color: var(--primary-color); border-color: var(--warm-gray);">
+                                        <span aria-hidden="true">&laquo;&laquo;</span>
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ venues.previous_page_number }}" aria-label="Previous" style="color: var(--primary-color); border-color: var(--warm-gray);">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                            {% for num in nums %}
+                                <li class="page-item {% if venues.number == forloop.counter %}active{% endif %}">
+                                    <a class="page-link" href="?page={{ forloop.counter }}" style="color: var(--primary-color); border-color: var(--warm-gray);">
+                                        {{ forloop.counter }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+
+                            {% if venues.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ venues.next_page_number }}" aria-label="Next" style="color: var(--primary-color); border-color: var(--warm-gray);">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ venues.paginator.num_pages }}" aria-label="Last" style="color: var(--primary-color); border-color: var(--warm-gray);">
+                                        <span aria-hidden="true">&raquo;&raquo;</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'Events/Base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <!-- Calendar Section -->
+        <div class="col-md-8">
+            <div class="card shadow-lg border-0 rounded-3">
+                <div class="card-header" style="background-color: var(--primary-color); color: white;">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2 class="mb-0">
+                            <i class="fas fa-calendar-alt me-2"></i>{{ month }} {{ year }}
+                        </h2>
+                        <div class="dropdown">
+                            <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="{% url 'Home' year|add:'-1' month %}">Previous Year</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{% url 'Home' year|add:'1' month %}">Next Year</a></li>
+                                
+                            
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="calendar">
+                        {{ cal|safe }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Events List Section -->
+        <div class="col-md-4">
+            <div class="card shadow-lg border-0 rounded-3">
+                <div class="card-header" style="background-color: var(--primary-color); color: white;">
+                    <h2 class="mb-0">
+                        <i class="fas fa-list me-2"></i>Events This Month
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <div class="event-list">
+                        {% if event_list %}
+                            {% for event in event_list %}
+                                <div class="event-item">
+                                    <h5 style="color: var(--primary-color);">{{ event.name }}</h5>
+                                    <p class="mb-1" style="color: var(--text-color);">
+                                        <i class="fas fa-calendar me-2" style="color: var(--accent-color);"></i>
+                                        {{ event.event_date }}
+                                    </p>
+                                    <p class="mb-1" style="color: var(--text-color);">
+                                        <i class="fas fa-building me-2" style="color: var(--accent-color);"></i>
+                                        {{ event.venue }}
+                                    </p>
+                                    <a href="{% url 'update-event' event.id %}" class="btn btn-sm mt-2" style="background-color: var(--accent-color); color: white; border: none;">
+                                        <i class="fas fa-edit me-1"></i>Update
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="text-center py-3">
+                                <i class="fas fa-calendar-times fa-2x mb-2" style="color: var(--warm-gray);"></i>
+                                <p style="color: var(--warm-gray);">No events scheduled for this month.</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends 'Events/Base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow-lg border-0 rounded-3">
+                <div class="card-header bg-primary text-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2 class="mb-0">All Events</h2>
+                        <a href="{% url 'add-event' %}" class="btn btn-light">
+                            <i class="fas fa-plus-circle me-2"></i>Add New Event
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    {% if event_list %}
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Date</th>
+                                        <th>Venue</th>
+                                        <th>Manager</th>
+                                        <th class="text-center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for event in event_list %}
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <i class="fas fa-calendar-check text-primary me-2"></i>
+                                                    {{ event.name }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <i class="fas fa-clock text-success me-2"></i>
+                                                    {{ event.event_date }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <i class="fas fa-building text-info me-2"></i>
+                                                    {{ event.venue }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <i class="fas fa-user-tie text-secondary me-2"></i>
+                                                    {{ event.manager }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex justify-content-center gap-2">
+                                                    <a href="{% url 'show-event' event.id %}" class="btn btn-sm btn-info" title="View Details">
+                                                        <i class="fas fa-eye"></i>
+                                                    </a>
+                                                    {% if user == event.manager %}
+                                                        <a href="{% url 'update-event' event.id %}" class="btn btn-sm btn-warning" title="Edit Event">
+                                                            <i class="fas fa-edit"></i>
+                                                        </a>
+                                                        <a href="{% url 'delete-event' event.id %}" class="btn btn-sm btn-danger" title="Delete Event">
+                                                            <i class="fas fa-trash"></i>
+                                                        </a>
+                                                    {% endif %}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="text-center py-5">
+                            <i class="fas fa-calendar-times fa-3x text-muted mb-3"></i>
+                            <h3 class="text-muted">No Events Found</h3>
+                            <p class="text-muted">There are no events scheduled at the moment.</p>
+                            <a href="{% url 'add-event' %}" class="btn btn-primary mt-3">
+                                <i class="fas fa-plus-circle me-2"></i>Create Your First Event
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

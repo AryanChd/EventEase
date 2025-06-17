@@ -1,0 +1,32 @@
+{% extends 'events/base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    {% if user.is_authenticated %}
+                        <h1>Update Venue...</h1>
+                        <br />
+                        <form action="" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <br />
+                            <input type="submit" value="Update" class="btn btn-secondary">
+                        </form>
+                    {% else %}
+                        <div class="text-center">
+                            <h1 class="mb-4">Access Denied</h1>
+                            <p class="mb-4">Sorry! You must be logged in to view this page...</p>
+                            <a href="{% url 'login' %}" class="btn btn-primary">
+                                <i class="fas fa-sign-in-alt me-2"></i> Login Here
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

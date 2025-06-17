@@ -1,0 +1,116 @@
+{% extends 'Events/Base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow-lg border-0 rounded-3">
+                <div class="card-header" style="background-color: var(--primary-color); color: white;">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2 class="mb-0">
+                            <i class="fas fa-calendar-alt me-2"></i>Events
+                        </h2>
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'add-event' %}" class="btn btn-light">
+                            <i class="fas fa-plus-circle me-2"></i>Add New Event
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-body">
+                    
+
+                    {% for event in event_list %}
+                    {% if event.approved %}
+                    <div class="card mb-4 shadow-sm border-0 rounded-3">
+                        <div class="card-header" style="background-color: var(--background-color);">
+                            <h4 class="mb-0" style="color: var(--primary-color);">{{ event }}</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <h5 class="mb-3" style="color: var(--primary-color);">
+                                            <i class="fas fa-calendar-alt me-2" style="color: var(--accent-color);"></i>Event Details
+                                        </h5>
+                                        <ul class="list-unstyled">
+                                            <li class="mb-2">
+                                                <i class="fas fa-calendar me-2" style="color: var(--accent-color);"></i>
+                                                <strong style="color: var(--primary-color);">Date:</strong> {{ event.event_date }}
+                                            </li>
+                                             <li class="mb-2">
+                                                <i class="fas fa-calendar-days  me-2" style="color: var(--accent-color);"></i>
+                                                <strong style="color: var(--primary-color);">Days Till Event:</strong> {{ event.Days_till }}
+                                            </li>
+                                             <li class="mb-2">
+                                                <i class="fas fa-calendar me-2" style="color: var(--accent-color);"></i>
+                                                <strong style="color: var(--primary-color);">Occured:</strong> {{ event.Is_past }}
+                                            </li>
+                                            <li class="mb-2">
+                                                <i class="fas fa-building me-2" style="color: var(--accent-color);"></i>
+                                                <strong style="color: var(--primary-color);">Venue:</strong> {{ event.venue }}
+                                            </li>
+                                            <li class="mb-2">
+                                                <i class="fas fa-globe me-2" style="color: var(--accent-color);"></i>
+                                                <strong style="color: var(--primary-color);">Venue Website:</strong> 
+                                                <a href="{{ event.venue.web }}" target="_blank" class="text-decoration-none" style="color: var(--accent-color);">{{ event.venue.web }}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <h5 class="mb-3" style="color: var(--primary-color);">
+                                            <i class="fas fa-info-circle me-2" style="color: var(--accent-color);"></i>Additional Information
+                                        </h5>
+                                        <ul class="list-unstyled">
+                                            <li class="mb-2">
+                                                <i class="fas fa-user-tie me-2" style="color: var(--accent-color);"></i>
+                                                <strong style="color: var(--primary-color);">Manager:</strong> {{ event.manager }}
+                                            </li>
+                                            <li class="mb-2">
+                                                <i class="fas fa-align-left me-2" style="color: var(--accent-color);"></i>
+                                                <strong style="color: var(--primary-color);">Description:</strong> {{ event.description }}
+                                            </li>
+                                            <li class="mb-2">
+                                                <i class="fas fa-clipboard-check me-2" style="color: var(--accent-color);"></i>
+                                                <strong style="color: var(--primary-color);">Approved:</strong> {{ event.approved}}
+                                            </li>
+                                            <li>
+                                                <i class="fas fa-users me-2" style="color: var(--accent-color);"></i>
+                                                <strong style="color: var(--primary-color);">Attendees:</strong>
+                                                <div class="mt-2">
+                                                    {% for user in event.attendees.all %}
+                                                        <span class="badge" style="background-color: var(--warm-gray); color: var(--text-color); margin-right: 0.25rem;">{{ user }}</span>
+                                                    {% empty %}
+                                                        <span style="color: var(--warm-gray);">No attendees yet.</span>
+                                                    {% endfor %}
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% if user.is_authenticated and user == event.manager %}
+                        <div class="card-footer" style="background-color: var(--background-color); text-align: center;">
+                            <a href="{% url 'update-event' event.id %}" class="btn btn-sm me-2" style="background-color: var(--accent-color); color: white; border: none;">
+                                <i class="fas fa-edit me-1"></i>Update Event
+                            </a>
+                            <a href="{% url 'delete-event' event.id %}" class="btn btn-sm" style="background-color: #E74C3C; color: white; border: none;">
+                                <i class="fas fa-trash-alt me-1"></i>Delete Event
+                            </a>
+                        </div>
+                        {% endif %}
+                    </div>
+                   
+                    {% endif %}
+
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

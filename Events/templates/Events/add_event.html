@@ -1,0 +1,129 @@
+{% extends 'Events/Base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h1 class="h3 mb-0">Add Event</h1>
+                </div>
+                <div class="card-body">
+                    {% if user.is_authenticated %}
+                        <h1 class="text-center mb-4">Add New Event</h1>
+                        
+                        {% if submitted %}
+                            <div class="alert alert-success text-center">
+                                <i class="fas fa-check-circle me-2"></i>
+                                Your Event Was Submitted Successfully!
+                            </div>
+                        {% else %}
+                            <form action="" method="POST" class="needs-validation" novalidate>
+                                {% csrf_token %}
+                                <div class="mb-4">
+                                    <label for="{{ form.name.id_for_label }}" class="form-label">Event Name</label>
+                                    {{ form.name }}
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label for="{{ form.event_date.id_for_label }}" class="form-label">Event Date & Time</label>
+                                    {{ form.event_date }}
+                                    <div class="form-text">Select the date and time for your event</div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label for="{{ form.venue.id_for_label }}" class="form-label">Venue</label>
+                                    {{ form.venue }}
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label for="{{ form.attendees.id_for_label }}" class="form-label">Attendees</label>
+                                    {{ form.attendees }}
+                                    <div class="form-text">Hold Ctrl/Cmd to select multiple attendees</div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label for="{{ form.description.id_for_label }}" class="form-label">Description</label>
+                                    {{ form.description }}
+                                </div>
+
+                                <div class="d-grid gap-2">
+                                    <button type="submit" class="btn btn-primary btn-lg">
+                                        <i class="fas fa-plus-circle me-2"></i>Add Event
+                                    </button>
+                                    <a href="{% url 'list-events' %}" class="btn btn-outline-secondary">
+                                        <i class="fas fa-arrow-left me-2"></i>Back to Events
+                                    </a>
+                                </div>
+                            </form>
+                        {% endif %}
+                    {% else %}
+                        <div class="text-center">
+                            <h1 class="mb-4">Access Denied</h1>
+                            <p class="mb-4">Sorry! You Must Be Logged In To View This Page...</p>
+                            <a href="{% url 'login' %}" class="btn btn-primary">
+                                <i class="fas fa-sign-in-alt me-2"></i>Login Here
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        border: none;
+        border-radius: 15px;
+    }
+    
+    .card-header {
+        border-radius: 15px 15px 0 0 !important;
+        background-color: var(--primary-color) !important;
+    }
+    
+    .form-control, .form-select {
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        padding: 0.75rem;
+        transition: all 0.3s ease;
+    }
+    
+    .form-control:focus, .form-select:focus {
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 0.2rem rgba(22, 160, 133, 0.25);
+    }
+    
+    .btn-primary {
+        background-color: var(--accent-color);
+        border-color: var(--accent-color);
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+        background-color: #138d75;
+        border-color: #138d75;
+        transform: translateY(-1px);
+    }
+    
+    .btn-outline-secondary {
+        border-radius: 8px;
+        padding: 0.75rem 1.5rem;
+    }
+    
+    .form-label {
+        color: var(--primary-color);
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+    }
+    
+    .form-text {
+        color: #666;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+    }
+</style>
+{% endblock %}

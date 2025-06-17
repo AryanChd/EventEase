@@ -1,0 +1,160 @@
+{% extends 'Events/Base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h1 class="h3 mb-0">Search Events</h1>
+                    <p class="mb-0 text-white-50">Find the perfect event for you</p>
+                </div>
+                <div class="card-body">
+                    {% if not searched %}
+                        <div class="text-center py-4">
+                            <i class="fas fa-calendar-search fa-3x text-primary mb-3"></i>
+                            <h3 class="h4 text-primary mb-2">Start Your Search</h3>
+                            <p class="text-muted mb-4">Enter an event name to find what you're looking for.</p>
+                        </div>
+                    {% endif %}
+
+                    <form action="{% url 'search-events' %}" method="POST" class="mb-4">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="fas fa-search"></i>
+                            </span>
+                            <input type="text" class="form-control" name="searched" placeholder="Search events...">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-search me-2"></i>Search
+                            </button>
+                        </div>
+                    </form>
+
+                    {% if searched %}
+                        <h2 class="h4 mb-4">Search Results for "{{ searched }}"</h2>
+                        
+                        {% if events %}
+                            <div class="row g-3">
+                                {% for event in events %}
+                                    <div class="col-md-6">
+                                        <div class="card h-100 border-0 shadow-sm">
+                                            <div class="card-body">
+                                                <h3 class="h5 mb-3">
+                                                    <i class="fas fa-calendar-alt me-2 text-primary"></i>
+                                                    {{ event }}
+                                                </h3>
+                                                <p class="mb-2">
+                                                    <i class="fas fa-map-marker-alt me-2 text-muted"></i>
+                                                    {{ event.venue }}
+                                                </p>
+                                                <p class="mb-2">
+                                                    <i class="fas fa-clock me-2 text-muted"></i>
+                                                    {{ event.event_date }}
+                                                </p>
+                                                <p class="mb-3">
+                                                    <i class="fas fa-users me-2 text-muted"></i>
+                                                    {{ event.attendees.count }} Attendees
+                                                </p>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <a href="{% url 'show-event' event.id %}" class="btn btn-outline-primary btn-sm">
+                                                        <i class="fas fa-info-circle me-1"></i>Details
+                                                    </a>
+                                                    {% if user.is_authenticated %}
+                                                        <div class="btn-group">
+                                                            <a href="{% url 'update-event' event.id %}" class="btn btn-outline-success btn-sm">
+                                                                <i class="fas fa-edit me-1"></i>Update
+                                                            </a>
+                                                            <a href="{% url 'delete-event' event.id %}" class="btn btn-outline-danger btn-sm">
+                                                                <i class="fas fa-trash me-1"></i>Delete
+                                                            </a>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="text-center py-4">
+                                <i class="fas fa-calendar-times fa-3x text-muted mb-3"></i>
+                                <h3 class="h4 text-muted mb-2">No Events Found</h3>
+                                <p class="text-muted mb-4">Try searching with different keywords.</p>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        border: none;
+        border-radius: 12px;
+    }
+    
+    .card-header {
+        border-radius: 12px 12px 0 0 !important;
+        background-color: var(--primary-color) !important;
+        padding: 1.25rem;
+    }
+    
+    .form-control {
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        padding: 0.75rem;
+        transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 0.2rem rgba(22, 160, 133, 0.25);
+    }
+    
+    .input-group-text {
+        background-color: #f8f9fa;
+        border: 1px solid #ddd;
+        color: var(--primary-color);
+    }
+    
+    .btn-primary {
+        background-color: var(--accent-color);
+        border-color: var(--accent-color);
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+        background-color: #138d75;
+        border-color: #138d75;
+        transform: translateY(-1px);
+    }
+    
+    .btn-outline-primary {
+        border-radius: 6px;
+        padding: 0.5rem 1rem;
+    }
+    
+    .btn-outline-success {
+        border-radius: 6px;
+        padding: 0.5rem 1rem;
+    }
+    
+    .btn-outline-danger {
+        border-radius: 6px;
+        padding: 0.5rem 1rem;
+    }
+    
+    .text-primary {
+        color: var(--primary-color) !important;
+    }
+    
+    .text-muted {
+        color: #666 !important;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends 'Events/Base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h1 class="mb-0">{{ event.name }}</h1>
+                        <div class="btn-group">
+                            {% if user == event.manager %}
+                                <a href="{% url 'update-event' event.id %}" class="btn btn-warning">
+                                    <i class="fas fa-edit me-2"></i>Edit
+                                </a>
+                                <a href="{% url 'delete-event' event.id %}" class="btn btn-danger">
+                                    <i class="fas fa-trash me-2"></i>Delete
+                                </a>
+                            {% endif %}
+                            <a href="{% url 'list-events' %}" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>Back
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card bg-light mb-4">
+                                <div class="card-body">
+                                    <h5 class="card-title">Event Details</h5>
+                                    <ul class="list-unstyled">
+                                        <li class="mb-3">
+                                            <i class="fas fa-calendar-alt me-2 text-primary"></i>
+                                            <strong>Date:</strong> {{ event.event_date }}
+                                        </li>
+                                        <li class="mb-3">
+                                            <i class="fas fa-map-marker-alt me-2 text-primary"></i>
+                                            <strong>Venue:</strong> {{ event.venue }}
+                                        </li>
+                                        <li class="mb-3">
+                                            <i class="fas fa-user me-2 text-primary"></i>
+                                            <strong>Manager:</strong> {{ event.manager }}
+                                        </li>
+                                        <li class="mb-3">
+                                            <i class="fas fa-users me-2 text-primary"></i>
+                                            <strong>Attendees:</strong> {{ event.attendees.count }}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card bg-light mb-4">
+                                <div class="card-body">
+                                    <h5 class="card-title">Description</h5>
+                                    <p class="card-text">{{ event.description }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if event.attendees.all %}
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h5 class="card-title">Attendees</h5>
+                                <div class="row">
+                                    {% for attendee in event.attendees.all %}
+                                        <div class="col-md-4 mb-2">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-user-circle me-2 text-primary"></i>
+                                                {{ attendee }}
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

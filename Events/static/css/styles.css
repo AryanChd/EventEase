@@ -1,0 +1,264 @@
+/* Global Styles */
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #e74c3c;
+    --accent-color: #f1c40f;
+    --text-color: #2c3e50;
+    --light-bg: #ecf0f1;
+    --dark-bg: #2c3e50;
+    --retro-font: 'Press Start 2P', cursive;
+    --body-font: 'VT323', monospace;
+}
+
+body {
+    font-family: var(--body-font);
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+/* Card Styling */
+.card {
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+/* Navbar Styling */
+.navbar {
+    background: linear-gradient(135deg, var(--primary-color), var(--dark-bg));
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    padding: 1rem 2rem;
+    font-family: var(--retro-font);
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--accent-color) !important;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.navbar-nav .nav-link {
+    color: #fff !important;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    margin: 0 0.5rem;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    background-color: var(--accent-color);
+    color: var(--dark-bg) !important;
+    transform: translateY(-2px);
+}
+
+/* Form Styling */
+.form-control {
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid var(--accent-color);
+    border-radius: 8px;
+    padding: 0.8rem;
+    font-family: var(--body-font);
+    font-size: 1.1rem;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 3px rgba(241, 196, 15, 0.3);
+    border-color: var(--accent-color);
+}
+
+/* Button Styling */
+.btn {
+    font-family: var(--retro-font);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.btn-primary:hover {
+    background-color: #c0392b;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+}
+
+/* Table Styling */
+.table {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.table thead th {
+    background-color: var(--primary-color);
+    color: white;
+    font-family: var(--retro-font);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(241, 196, 15, 0.1);
+}
+
+/* Calendar Styling */
+.calendar-container {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    margin: 1rem 0;
+}
+
+.calendar-container table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 1.2rem;
+}
+
+.calendar-container th {
+    background: var(--primary-color);
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    font-family: var(--retro-font);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.calendar-container td {
+    padding: 1.5rem;
+    text-align: center;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    min-width: 100px;
+    height: 100px;
+    vertical-align: top;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.calendar-container td:hover {
+    background-color: var(--accent-color);
+    transform: scale(1.02);
+}
+
+.calendar-container td.today {
+    background-color: rgba(241, 196, 15, 0.2);
+    font-weight: bold;
+}
+
+.calendar-container td.has-event {
+    background-color: rgba(46, 204, 113, 0.1);
+    position: relative;
+}
+
+.calendar-container td.has-event::after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 8px;
+    background-color: var(--secondary-color);
+    border-radius: 50%;
+}
+
+/* Alert Styling */
+.alert {
+    border: none;
+    border-radius: 10px;
+    font-family: var(--body-font);
+    font-size: 1.1rem;
+    padding: 1rem 2rem;
+    margin-bottom: 2rem;
+}
+
+.alert-warning {
+    background-color: rgba(241, 196, 15, 0.2);
+    color: var(--dark-bg);
+    border-left: 4px solid var(--accent-color);
+}
+
+/* Footer Styling */
+footer {
+    background: linear-gradient(135deg, var(--dark-bg), var(--primary-color));
+    color: white;
+    padding: 2rem 0;
+    margin-top: 3rem;
+}
+
+footer h5 {
+    font-family: var(--retro-font);
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1.5rem;
+}
+
+footer a {
+    color: var(--accent-color);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+footer a:hover {
+    color: white;
+    text-decoration: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 1.2rem;
+    }
+    
+    .calendar-container {
+        padding: 1rem;
+    }
+    
+    .calendar-container td {
+        padding: 0.8rem;
+        min-width: 80px;
+        height: 80px;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+}
+
+/* Animation Effects */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card, .calendar-container, .table {
+    animation: fadeIn 0.5s ease-out;
+}
+

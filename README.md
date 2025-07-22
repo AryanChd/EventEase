@@ -1,6 +1,13 @@
 # 📅 EventEase – Event Management System
 
-EventEase is a full-stack Event Management System developed using **Python** and **Django**. This project was created as part of our **Second Year BSc (Hons) Computing** coursework at **Itahari International College**. It allows users to create, browse, search, and manage events and venues, with admin approval functionality and user authentication.
+**Second Year Project** 
+**Program:** BSc (Hons) Computing  
+**Institution:** Itahari International College  
+
+
+
+
+EventEase is a full-stack Event Management System developed using **Python** and **Django**.  It allows users to create, browse, search, and manage events and venues, with admin approval functionality and user authentication.
 
 ---
 
